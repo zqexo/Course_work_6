@@ -43,12 +43,7 @@ FORBIDDEN_WORDS = [
 class ClientForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Client
-        fields = [
-            "email",
-            "first_name",
-            "last_name",
-            "comment"
-        ]
+        fields = ["email", "first_name", "last_name", "comment"]
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")

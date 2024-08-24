@@ -19,20 +19,30 @@ def send_mailing():
     current_datetime = datetime.now(zone)
 
     # Фильтруем рассылки, которые должны быть отправлены
-    mailings = Mailing.objects.filter(send_date__lte=current_datetime).filter(status__in=['created', 'started'])
+    mailings = Mailing.objects.filter(send_date__lte=current_datetime).filter(
+        status__in=["created", "started"]
+    )
 
     logger.info(f"Found {mailings.count()} mailings to process")
 
     for mailing in mailings:
-        last_try = TryMailing.objects.filter(mailing=mailing).order_by('-last_try').first()
+        last_try = (
+            TryMailing.objects.filter(mailing=mailing).order_by("-last_try").first()
+        )
         interval_mapping = {
             "once a minute": timedelta(minutes=1),
             "once a day": timedelta(days=1),
             "once a week": timedelta(weeks=1),
-            "once a month": timedelta(days=30)  # или используйте библиотеку dateutil для точного подсчета
+            "once a month": timedelta(
+                days=30
+            ),  # или используйте библиотеку dateutil для точного подсчета
         }
 
-        if last_try is None or (current_datetime - last_try.last_try) >= interval_mapping[mailing.interval]:
+        if (
+            last_try is None
+            or (current_datetime - last_try.last_try)
+            >= interval_mapping[mailing.interval]
+        ):
             # Отправляем письма клиентам
             recipients = [client.email for client in mailing.email.all()]
             try:
@@ -42,24 +52,19 @@ def send_mailing():
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=recipients,
                 )
-                status = 'success'
-                response = 'Emails sent successfully'
+                status = "success"
+                response = "Emails sent successfully"
                 logger.info("Emails sent successfully")
             except Exception as e:
-                status = 'failure'
+                status = "failure"
                 response = str(e)
                 logger.error(f"Error sending emails: {response}")
 
             # Сохраняем результат попытки
-            TryMailing.objects.create(
-                mailing=mailing,
-                status=status,
-                response=response
-            )
+            TryMailing.objects.create(mailing=mailing, status=status, response=response)
 
             # Обновляем статус рассылки, если это была последняя отправка
-            if status == 'success':
-                mailing.status = 'completed'
+            if status == "success":
+                mailing.status = "completed"
                 mailing.save()
     logger.info("Mailing process completed")
-

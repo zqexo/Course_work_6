@@ -1,9 +1,20 @@
 from main.apps import MainConfig
 from django.urls import path
 
-from main.views import ClientListView, ClientCreateView, ClientUpdateView, ClientDeleteView, MessageListView, \
-    MessageCreateView, MessageUpdateView, MessageDeleteView, MailingListView, MailingUpdateView, MailingCreateView, \
-    MailingDeleteView
+from main.views import (
+    ClientListView,
+    ClientCreateView,
+    ClientUpdateView,
+    ClientDeleteView,
+    MessageListView,
+    MessageCreateView,
+    MessageUpdateView,
+    MessageDeleteView,
+    MailingListView,
+    MailingUpdateView,
+    MailingCreateView,
+    MailingDeleteView,
+)
 
 app_name = MainConfig.name
 
