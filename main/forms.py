@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.core.exceptions import ValidationError
 
-from main.models import Client
+from main.models import Client, Message, Mailing
 
 
 class StyleFormMixin:
@@ -67,3 +67,35 @@ class ClientForm(StyleFormMixin, ModelForm):
         if comment and any(word in comment.lower() for word in FORBIDDEN_WORDS):
             raise ValidationError("Комментарий клиента содержит запрещённые слова.")
         return comment
+
+
+class MessageForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Message
+        fields = [
+            "subject",
+            "body",
+        ]
+
+    def clean_subject(self):
+        subject = self.cleaned_data.get("subject")
+        if subject and any(word in subject.lower() for word in FORBIDDEN_WORDS):
+            raise ValidationError("Комментарий клиента содержит запрещённые слова.")
+        return subject
+
+    def clean_body(self):
+        body = self.cleaned_data.get("body")
+        if body and any(word in body.lower() for word in FORBIDDEN_WORDS):
+            raise ValidationError("Комментарий клиента содержит запрещённые слова.")
+        return body
+
+
+class MailingForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Mailing
+        fields = [
+            "email",
+            "message",
+            "send_date",
+            "interval",
+        ]

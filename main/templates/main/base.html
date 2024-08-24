@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Магаз zQEXO</title>
+    <title>Рассылка zQEXO</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
 
@@ -314,7 +314,9 @@
                 <h1 class="fw-light">Какое-то название</h1>
                 <p class="lead text-body-secondary">Какое-то описание.</p>
                 <p>
-                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2">Главная страница</a>
+                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2">Клиенты</a>
+                    <a href="{% url 'main:mailing_list' %}" class="btn btn-primary my-2">Рассылки</a>
+                    <a href="{% url 'main:message_list' %}" class="btn btn-outline-primary my-2">Сообщения</a>
                 </p>
             </div>
         </div>

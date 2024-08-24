@@ -9,16 +9,16 @@
             <div class="col-lg-6 col-md-8">
                 <div class="card shadow-sm bg-light">
                     <div class="card-header bg-primary text-white text-center ">
-                        <h2>Удаление продукта</h2>
+                        <h2>Удаление сообщения</h2>
                     </div>
                     <div class="card-body py-3 rounded-pill">
-                        <h5 class="mb-3 text-center">Хотите удалить рассылку {{ object.email }}?</h5>
+                        <h5 class="mb-3 text-center">Хотите удалить сообщение с темой: {{ object.client }}?</h5>
                     </div>
                     <div class="card-footer d-flex justify-content-between py-2">
                         <form method="post" enctype="multipart/form-data" class="w-100 d-flex justify-content-between">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger flex-grow-1 me-2 rounded-pill">Удалить</button>
-                            <a class="btn btn-outline-primary flex-grow-1 ms-2 rounded-pill" href="{% url 'main:mailing_list' %}" role="button">Отменить</a>
+                            <a class="btn btn-outline-primary flex-grow-1 ms-2 rounded-pill" href="{% url 'main:message_list' %}" role="button">Отменить</a>
                         </form>
                     </div>
                 </div>

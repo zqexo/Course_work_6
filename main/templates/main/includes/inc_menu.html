@@ -16,12 +16,14 @@
                         <li><a href="{% url 'users:register' %}" class="text-black-80">Регистрация</a></li>
                     {% endif %}
                     <br>
-                    <li><a href="{% url 'main:client_list' %}" class="text-black-80">Главная</a></li>
+                    <li><a href="{% url 'main:client_list' %}" class="text-black-80">Клиенты</a></li>
+                    <li><a href="{% url 'main:mailing_list' %}" class="text-black-80">Рассылки</a></li>
+                    <li><a href="{% url 'main:message_list' %}" class="text-black-80">Сообщения</a></li>
                     <br>
-{#                    {% if user.is_superuser %}#}
-{#                        <li><a href="{% url 'catalog:clear_cache' %}" class="text-secondary">Очистить кэш</a><small class="text-secondary"> (superuser)</small>#}
-{#                        </li>#}
-{#                    {% endif %}#}
+                    {#                    {% if user.is_superuser %}#}
+                    {#                        <li><a href="{% url 'catalog:clear_cache' %}" class="text-secondary">Очистить кэш</a><small class="text-secondary"> (superuser)</small>#}
+                    {#                        </li>#}
+                    {#                    {% endif %}#}
                 </ul>
             </div>
         </div>

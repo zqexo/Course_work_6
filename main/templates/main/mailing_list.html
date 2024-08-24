@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="col-12">
+                <div class="row">
+                    <!-- Кнопка "Добавить" -->
+                    <div class="col-1 d-flex justify-content-start">
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-outline-primary btn-circle-add d-flex justify-content-center align-items-center mx-auto"
+                               href="{% url 'main:mailing_create' %}"
+                               role="button">
+                                <img src="{% static 'crud_icons/add.png' %}" alt="Добавить новую версию"
+                                     class="btn-add-icon">
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Список клиентов -->
+            <div class="row">
+                {% for mailing in object_list %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5><small>Рассылка </small>{{ mailing.pk }}</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Клиент: {{ mailing.email.email }}
+                                </li>
+                                <li class="list-group-item">
+                                    Сообщение: {{ mailing.message }}
+                                </li>
+                                <li class="list-group-item">
+                                    Интервал: {{ mailing.internal }}
+                                </li>
+                                <li class="list-group-item">
+                                    Статус: {{ mailing.status }}
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="btn-group text-center">
+                                        <a class="btn btn-outline-secondary btn-circle"
+                                           href="{% url 'main:mailing_update' mailing.pk %}"
+                                           role="button" title="Изменить">
+                                            <img src="{% static 'crud_icons/edit.png' %}" alt="Изменить"
+                                                 class="btn-icon">
+                                        </a>
+
+                                        <a class="btn btn-outline-secondary btn-circle btn-delete"
+                                           href="{% url 'main:mailing_delete' mailing.pk %}"
+                                           role="button" title="Удалить">
+                                            <img src="{% static 'crud_icons/delete.png' %}" alt="Удалить"
+                                                 class="btn-icon">
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

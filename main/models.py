@@ -9,13 +9,15 @@ class Client(models.Model):
     last_name = models.CharField(max_length=200, **NULLABLE, verbose_name='Фамилия')
     comment = models.TextField(**NULLABLE, verbose_name='Комментарий')
     users = models.ForeignKey(User, on_delete=models.SET_NULL, **NULLABLE, related_name="Юзеры",
-                                verbose_name="Пользователь", )
-
+                              verbose_name="Пользователь", )
 
     class Meta:
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
         ordering = ("email",)
+
+    def __str__(self):
+        return f"{self.email}"
 
 
 class Message(models.Model):
@@ -27,9 +29,12 @@ class Message(models.Model):
         verbose_name_plural = "Сообщения"
         ordering = ("subject",)
 
+    def __str__(self):
+        return f"{self.subject}"
+
 
 class Mailing(models.Model):
-    email = models.ManyToManyField(Client, related_name="emails", verbose_name="Почта", )
+    email = models.ManyToManyField(Client, related_name="emails", verbose_name="Клиент с почтой", )
     message = models.ForeignKey(Message, on_delete=models.SET_NULL, **NULLABLE, related_name="Сообщение",
                                 verbose_name="massage", )
 
@@ -46,10 +51,11 @@ class Mailing(models.Model):
     CREATED = "created"
     STARTED = "started"
     DAY = "once a day"
+    MINUTE = "once a minute"
     WEEK = "once a week"
     MONTH = "once a month"
     STATUS = [(COMPLETED, "completed"), (CREATED, "created"), (STARTED, "started")]
-    INTERVAL = [(DAY, "once a days"), (WEEK, "once a week"), (MONTH, "once a months")]
+    INTERVAL = [(MINUTE, "once a minute"), (DAY, "once a days"), (WEEK, "once a week"), (MONTH, "once a months")]
 
     interval = models.CharField(choices=INTERVAL, default=WEEK, verbose_name="Интервал")
     status = models.CharField(choices=STATUS, default=CREATED, verbose_name="Статус")
@@ -58,6 +64,9 @@ class Mailing(models.Model):
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылки"
         ordering = ("interval",)
+
+    def __str__(self):
+        return f"Рассылка с клиентом {self.email} сообщением {self.message}"
 
 
 class TryMailing(models.Model):
@@ -75,3 +84,6 @@ class TryMailing(models.Model):
         verbose_name = "Попытка рассылки"
         verbose_name_plural = "Попытки рассылок"
         ordering = ("status",)
+
+    def __str__(self):
+        return f"{self.status}"
