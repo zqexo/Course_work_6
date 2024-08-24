@@ -1,0 +1,37 @@
+<div class="collapse text-bg-dark" id="navbarHeader">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+                <h4>Название</h4>
+                <p class="text-body-secondary">Тут какое-то описание.</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+                <h4>Навигация</h4>
+                <ul class="list-unstyled">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:profile' %}">Профиль</a></li>
+                        <li><a href="{% url 'users:logout' %}" class="text-black-80">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-black-80">Войти</a></li>
+                        <li><a href="{% url 'users:register' %}" class="text-black-80">Регистрация</a></li>
+                    {% endif %}
+                    <br>
+                    <li><a href="{% url 'main:client_list' %}" class="text-black-80">Главная</a></li>
+                    <br>
+{#                    {% if user.is_superuser %}#}
+{#                        <li><a href="{% url 'catalog:clear_cache' %}" class="text-secondary">Очистить кэш</a><small class="text-secondary"> (superuser)</small>#}
+{#                        </li>#}
+{#                    {% endif %}#}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
