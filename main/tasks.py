@@ -17,7 +17,7 @@ def send_mailing(mailing_id=None):
         mailings = Mailing.objects.filter(id=mailing_id)
     else:
         mailings = Mailing.objects.filter(send_date__lte=current_datetime, end_date__gte=current_datetime).filter(
-            status__in=["created", "started"]
+            status__in=["created", "started", "completed"]
         )
 
     logger.info(f"Found {mailings.count()} mailings to process")
