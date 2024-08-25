@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from main.forms import ClientForm, MessageForm, MailingForm
@@ -59,6 +60,13 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy("main:mailing_list")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['initial_send_date'] = now()
+        kwargs['initial_end_date'] = now()
+        return kwargs
 
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):

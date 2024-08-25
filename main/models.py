@@ -53,11 +53,7 @@ class Mailing(models.Model):
     )
 
     # Добавить поля: дата и время первой отправки рассылки (заполняются пользователем)
-    send_date = models.CharField(
-        max_length=200,
-        **NULLABLE,
-        default="Дата не указана",
-        verbose_name="Дата отправки",
+    send_date = models.DateTimeField(**NULLABLE, verbose_name="Дата начала рассылки"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания рассылки"
@@ -83,6 +79,9 @@ class Mailing(models.Model):
 
     interval = models.CharField(choices=INTERVAL, default=WEEK, verbose_name="Интервал")
     status = models.CharField(choices=STATUS, default=CREATED, verbose_name="Статус")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
+    end_date = models.DateTimeField(**NULLABLE, verbose_name="Дата окончания рассылки")
+    auto_start = models.BooleanField(default=True, verbose_name="Автоматический старт")
 
     class Meta:
         verbose_name = "Рассылка"

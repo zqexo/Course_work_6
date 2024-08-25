@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.timezone import now
 
 from main.models import Client, Message, Mailing
 
@@ -92,5 +93,24 @@ class MailingForm(StyleFormMixin, ModelForm):
             "email",
             "message",
             "send_date",
+            "end_date",
             "interval",
         ]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        initial_send_date = kwargs.pop('initial_send_date', now())
+        initial_end_date = kwargs.pop('initial_end_date', now())
+        super().__init__(*args, **kwargs)
+
+        self.fields['send_date'].initial = initial_send_date
+        self.fields['end_date'].initial = initial_end_date
+
+    def save(self, commit=True):
+        mailing = super().save(commit=False)
+        if self.user:
+            mailing.user = self.user
+        if commit:
+            mailing.save()
+        return mailing
+

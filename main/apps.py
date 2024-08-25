@@ -7,5 +7,5 @@ class MainConfig(AppConfig):
 
     def ready(self):
         from main.scheduler import start
-
         start()
+
