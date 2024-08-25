@@ -86,7 +86,7 @@ class MessageForm(StyleFormMixin, ModelForm):
         return body
 
 
-class MailingForm(StyleFormMixin, ModelForm):
+class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
         fields = [
@@ -96,6 +96,12 @@ class MailingForm(StyleFormMixin, ModelForm):
             "end_date",
             "interval",
         ]
+        widgets = {
+            'email': forms.CheckboxSelectMultiple(),
+            'send_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'end_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'interval': forms.Select(attrs={'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
@@ -113,4 +119,3 @@ class MailingForm(StyleFormMixin, ModelForm):
         if commit:
             mailing.save()
         return mailing
-

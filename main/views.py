@@ -68,6 +68,11 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
         kwargs['initial_end_date'] = now()
         return kwargs
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        form.instance.email.set(self.request.POST.getlist('email'))
+        return response
+
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
