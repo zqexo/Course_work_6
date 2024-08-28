@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.conf import settings
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -88,7 +89,6 @@ TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 
 USE_TZ = True
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

@@ -10,9 +10,7 @@ class Client(models.Model):
     comment = models.TextField(**NULLABLE, verbose_name="Комментарий")
     user = models.ForeignKey(
         User,
-        on_delete=models.SET_NULL,
-        **NULLABLE,
-        related_name="User",
+        on_delete=models.CASCADE,
         verbose_name="Пользователь",
     )
 
@@ -20,6 +18,11 @@ class Client(models.Model):
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
         ordering = ("email",)
+        permissions = [
+            ("can_view_clients", "can view clients"),
+            ("can_change_clients", "can change clients"),
+            ("can_delete_clients", "can delete clients"),
+        ]
 
     def __str__(self):
         return f"{self.email}"
@@ -40,6 +43,10 @@ class Message(models.Model):
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
         ordering = ("subject",)
+        permissions = [
+            ("can_change_message", "can change message"),
+            ("can_delete_message", "can delete message"),
+        ]
 
     def __str__(self):
         return f"{self.subject}"
@@ -83,9 +90,14 @@ class Mailing(models.Model):
 
     interval = models.CharField(choices=INTERVAL, default=WEEK, verbose_name="Интервал")
     status = models.CharField(choices=STATUS, default=CREATED, verbose_name="Статус")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
     end_date = models.DateTimeField(**NULLABLE, verbose_name="Дата окончания рассылки")
     auto_start = models.BooleanField(default=True, verbose_name="Автоматический старт")
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь"
+    )
 
     class Meta:
         verbose_name = "Рассылка"
@@ -95,6 +107,7 @@ class Mailing(models.Model):
             ("can_change_mailing", "can change mailing"),
             ("can_delete_mailing", "can delete mailing"),
             ("can_view_mailing", "can view mailing"),
+            ("can_create_mailing", "can create mailing"),
         ]
 
     def __str__(self):

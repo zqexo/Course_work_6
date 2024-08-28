@@ -7,16 +7,20 @@
                 <div class="row">
                     <!-- Кнопка "Добавить" -->
                     <div class="col-1 d-flex justify-content-start">
-                        {% if user.is_authenticated %}
-                            <a class="btn btn-outline-primary btn-circle-add d-flex justify-content-center align-items-center mx-auto"
-                               href="{% url 'main:client_create' %}"
-                               role="button">
-                                <img src="{% static 'crud_icons/add.png' %}" alt="Добавить новую версию"
-                                     class="btn-add-icon">
-                            </a>
-                        {% endif %}
+                        <a class="btn btn-outline-primary btn-circle-add d-flex justify-content-center align-items-center mx-auto"
+                           href="{% url 'main:client_create' %}"
+                           role="button">
+                            <img src="{% static 'crud_icons/add.png' %}" alt="Добавить новую версию"
+                                 class="btn-add-icon">
+                        </a>
+                    </div>
+                    <div class="col-7 d-flex justify-content-start">
+                        <h6 class="text-danger">Пользователь видит только тех клиентов, которых сам добавил!<br>
+                            <small class="text-primary">Либо пользователь должен быть контент-менеджером или superuser.</small>
+                        </h6>
                     </div>
                 </div>
+
             </div>
             <!-- Список клиентов -->
             <div class="row">

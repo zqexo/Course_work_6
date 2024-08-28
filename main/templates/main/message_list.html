@@ -34,6 +34,7 @@
                                     Автор: {{ message.owner }}
                                 </li>
                                 <li class="list-group-item">
+                                    {% if user.is_superuser or message.owner == request.user %}
                                     <div class="btn-group text-center">
                                         <a class="btn btn-outline-secondary btn-circle"
                                            href="{% url 'main:message_update' message.pk %}"
@@ -49,6 +50,10 @@
                                                  class="btn-icon">
                                         </a>
                                     </div>
+                                        {% else %}
+                                        <h6 class="text-secondary text-center">У вас нет права редактировать или удалять
+                                                    сообщения созданные другими пользователями.</h6>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>
