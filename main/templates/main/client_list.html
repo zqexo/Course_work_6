@@ -34,6 +34,9 @@
                                     Комментарий: {{ client.comment }}
                                 </li>
                                 <li class="list-group-item">
+                                    Добавлен пользователем: {{ client.user }}
+                                </li>
+                                <li class="list-group-item">
                                     <div class="btn-group text-center">
                                         <a class="btn btn-outline-secondary btn-circle"
                                            href="{% url 'main:client_update' client.pk %}"

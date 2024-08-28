@@ -16,3 +16,12 @@ class User(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = "Юзер"
+        verbose_name_plural = "Юзеры"
+        ordering = ("email",)
+        permissions = [
+            ("can_view_users_list", "can view users list"),
+            ("can_block_user", "can block user"),
+        ]

@@ -90,14 +90,15 @@ class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
         fields = [
-            "email",
+            "clients",
             "message",
             "send_date",
             "end_date",
             "interval",
         ]
         widgets = {
-            'email': forms.CheckboxSelectMultiple(),
+            'clients': forms.CheckboxSelectMultiple(),
+            'message': forms.Select(attrs={'class': 'form-control'}),
             'send_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'end_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'interval': forms.Select(attrs={'class': 'form-control'}),
@@ -118,4 +119,5 @@ class MailingForm(forms.ModelForm):
             mailing.user = self.user
         if commit:
             mailing.save()
+            self.save_m2m()
         return mailing

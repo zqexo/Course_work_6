@@ -31,6 +31,9 @@
                                     Текст: {{ message.body }}
                                 </li>
                                 <li class="list-group-item">
+                                    Автор: {{ message.owner }}
+                                </li>
+                                <li class="list-group-item">
                                     <div class="btn-group text-center">
                                         <a class="btn btn-outline-secondary btn-circle"
                                            href="{% url 'main:message_update' message.pk %}"

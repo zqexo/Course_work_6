@@ -4,15 +4,15 @@ from users.models import User
 
 
 class Client(models.Model):
-    email = models.CharField(max_length=250, verbose_name="Почта")
+    email = models.EmailField(verbose_name="Почта", unique=True)
     first_name = models.CharField(max_length=200, **NULLABLE, verbose_name="Имя")
     last_name = models.CharField(max_length=200, **NULLABLE, verbose_name="Фамилия")
     comment = models.TextField(**NULLABLE, verbose_name="Комментарий")
-    users = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         **NULLABLE,
-        related_name="Юзеры",
+        related_name="User",
         verbose_name="Пользователь",
     )
 
@@ -28,6 +28,13 @@ class Client(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=200, verbose_name="Тема")
     body = models.TextField(verbose_name="Содержание")
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        **NULLABLE,
+        related_name="Owner",
+        verbose_name="Пользователь",
+    )
 
     class Meta:
         verbose_name = "Сообщение"
@@ -39,22 +46,20 @@ class Message(models.Model):
 
 
 class Mailing(models.Model):
-    email = models.ManyToManyField(
+    clients = models.ManyToManyField(
         Client,
-        related_name="emails",
+        related_name="mailings",
         verbose_name="Клиент с почтой",
     )
     message = models.ForeignKey(
         Message,
         on_delete=models.SET_NULL,
         **NULLABLE,
-        related_name="Сообщение",
+        related_name="mailings",
         verbose_name="massage",
     )
-
-    # Добавить поля: дата и время первой отправки рассылки (заполняются пользователем)
     send_date = models.DateTimeField(**NULLABLE, verbose_name="Дата начала рассылки"
-    )
+                                     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания рассылки"
     )
@@ -87,9 +92,14 @@ class Mailing(models.Model):
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылки"
         ordering = ("interval",)
+        permissions = [
+            ("can_change_mailing", "can change mailing"),
+            ("can_delete_mailing", "can delete mailing"),
+            ("can_view_mailing", "can view mailing"),
+        ]
 
     def __str__(self):
-        return f"Рассылка с клиентом {self.email} сообщением {self.message}"
+        return f"Рассылка с клиентом {self.clients} сообщением {self.message}"
 
 
 class TryMailing(models.Model):
@@ -103,9 +113,8 @@ class TryMailing(models.Model):
     response = models.TextField(**NULLABLE, verbose_name="Ответ")
     mailing = models.ForeignKey(
         Mailing,
-        on_delete=models.SET_NULL,
-        **NULLABLE,
-        related_name="emails",
+        on_delete=models.CASCADE,
+        related_name="logs",
         verbose_name="Рассылка",
     )
 

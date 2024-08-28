@@ -7,7 +7,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 def send_mailing(mailing_id=None):
     logger.info("Starting mailing process")
     zone = pytz.timezone(settings.TIME_ZONE)
@@ -17,7 +16,7 @@ def send_mailing(mailing_id=None):
         mailings = Mailing.objects.filter(id=mailing_id)
     else:
         mailings = Mailing.objects.filter(send_date__lte=current_datetime, end_date__gte=current_datetime).filter(
-            status__in=["created", "started", "completed"]
+            status__in=["created", "started"]
         )
 
     logger.info(f"Found {mailings.count()} mailings to process")
@@ -32,7 +31,8 @@ def send_mailing(mailing_id=None):
         }
 
         if last_try is None or (current_datetime - last_try.last_try) >= interval_mapping[mailing.interval]:
-            recipients = [client.email for client in mailing.email.all()]
+            recipients = [client.email for client in mailing.clients.all()]
+
             try:
                 send_mail(
                     subject=mailing.message.subject,
@@ -50,8 +50,7 @@ def send_mailing(mailing_id=None):
 
             TryMailing.objects.create(mailing=mailing, status=status, response=response)
 
-            # Устанавливаем статус на "completed" если время окончания наступило
-            if status == "success" and current_datetime >= mailing.end_date:
+            if current_datetime >= mailing.end_date:
                 mailing.status = "completed"
                 mailing.save()
 

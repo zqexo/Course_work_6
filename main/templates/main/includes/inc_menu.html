@@ -19,11 +19,10 @@
                     <li><a href="{% url 'main:client_list' %}" class="text-black-80">Клиенты</a></li>
                     <li><a href="{% url 'main:mailing_list' %}" class="text-black-80">Рассылки</a></li>
                     <li><a href="{% url 'main:message_list' %}" class="text-black-80">Сообщения</a></li>
+                    {% if perms.users.can_view_users_list and perms.users.can_block_user%}
+                        <li><a href="{% url 'users:user_list' %}" class="text-black-80">Пользователи</a></li>
+                    {% endif %}
                     <br>
-                    {#                    {% if user.is_superuser %}#}
-                    {#                        <li><a href="{% url 'catalog:clear_cache' %}" class="text-secondary">Очистить кэш</a><small class="text-secondary"> (superuser)</small>#}
-                    {#                        </li>#}
-                    {#                    {% endif %}#}
                 </ul>
             </div>
         </div>
@@ -35,5 +34,11 @@
                 aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {% if user.is_superuser %}
+            <div class="col-11 mx-auto">
+                <a href="{% url 'admin:index' %}" class="btn btn-dark my-2 ms-lg-2">Админка</a>
+                <br>
+            </div>
+    {% endif %}
     </div>
 </div>

@@ -16,49 +16,64 @@
                             </a>
                         {% endif %}
                     </div>
+                        <div class="col-7 d-flex justify-content-start">
+                            <h6 class="text-danger">Пользователь видит только те рассылки, автором которых является!<br>
+                                <small class="text-primary">Либо пользователь должен быть контент-менеджером.</small>
+                            </h6>
+                        </div>
                 </div>
             </div>
             <!-- Список клиентов -->
             <div class="row">
-                {% for mailing in object_list %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5><small>Рассылка </small>{{ mailing.pk }}</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    Клиент: {{ mailing.email.email }}
-                                </li>
-                                <li class="list-group-item">
-                                    Сообщение: {{ mailing.message }}
-                                </li>
-                                <li class="list-group-item">
-                                    Интервал: {{ mailing.internal }}
-                                </li>
-                                <li class="list-group-item">
-                                    Статус: {{ mailing.status }}
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="btn-group text-center">
-                                        <a class="btn btn-outline-secondary btn-circle"
-                                           href="{% url 'main:mailing_update' mailing.pk %}"
-                                           role="button" title="Изменить">
-                                            <img src="{% static 'crud_icons/edit.png' %}" alt="Изменить"
-                                                 class="btn-icon">
-                                        </a>
 
-                                        <a class="btn btn-outline-secondary btn-circle btn-delete"
-                                           href="{% url 'main:mailing_delete' mailing.pk %}"
-                                           role="button" title="Удалить">
-                                            <img src="{% static 'crud_icons/delete.png' %}" alt="Удалить"
-                                                 class="btn-icon">
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
+                {% for mailing in object_list %}
+                    {% if mailing.user == request.user or perms.can_view_mailing %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5><small>Рассылка </small>{{ mailing.pk }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        Клиенты:
+                                        {% for client in mailing.clients.all %}
+                                            {{ client.email }}
+                                            {% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Сообщение: {{ mailing.message }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Интервал: {{ mailing.interval }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Статус: {{ mailing.status }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Автор: {{ mailing.user }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="btn-group text-center">
+                                            <a class="btn btn-outline-secondary btn-circle"
+                                               href="{% url 'main:mailing_update' mailing.pk %}"
+                                               role="button" title="Изменить">
+                                                <img src="{% static 'crud_icons/edit.png' %}" alt="Изменить"
+                                                     class="btn-icon">
+                                            </a>
+
+                                            <a class="btn btn-outline-secondary btn-circle btn-delete"
+                                               href="{% url 'main:mailing_delete' mailing.pk %}"
+                                               role="button" title="Удалить">
+                                                <img src="{% static 'crud_icons/delete.png' %}" alt="Удалить"
+                                                     class="btn-icon">
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

@@ -314,8 +314,14 @@
                 <h1 class="fw-light">Какое-то название</h1>
                 <p class="lead text-body-secondary">Какое-то описание.</p>
                 <p>
-                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2">Клиенты</a>
-                    <a href="{% url 'main:mailing_list' %}" class="btn btn-primary my-2">Рассылки</a>
+
+                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2 ms-lg-2">Клиенты</a>
+                    {% if perms.users.can_view_users_list and perms.users.can_block_user %}
+                        <a href="{% url 'users:user_list' %}" class="btn btn-outline-primary my-2 ">Пользователи</a>
+                    {% endif %}
+
+                    <br>
+                    <a href="{% url 'main:mailing_list' %}" class="btn btn-primary my-2"> Рассылки </a>
                     <a href="{% url 'main:message_list' %}" class="btn btn-outline-primary my-2">Сообщения</a>
                 </p>
             </div>

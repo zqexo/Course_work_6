@@ -1,0 +1,44 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row">
+                {% for user in object_list %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5><small>Активность: </small>{{ user.is_active }}</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Email: {{ user.email }}
+                                </li>
+                                <li class="list-group-item">
+                                    Телефон: {{ user.phone }}
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="btn-group text-center">
+                                        <a class="btn btn-outline-secondary btn-circle"
+                                           href="{% url 'users:user_update' user.pk %}"
+                                           role="button" title="Изменить">
+                                            <img src="{% static 'crud_icons/edit.png' %}" alt="Изменить"
+                                                 class="btn-icon">
+                                        </a>
+
+{#                                        <a class="btn btn-outline-secondary btn-circle btn-delete"#}
+{#                                           href="{% url 'main:client_delete' user.pk %}"#}
+{#                                           role="button" title="Удалить">#}
+{#                                            <img src="{% static 'crud_icons/delete.png' %}" alt="Удалить"#}
+{#                                                 class="btn-icon">#}
+{#                                        </a>#}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
