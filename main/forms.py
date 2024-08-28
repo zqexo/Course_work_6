@@ -97,21 +97,25 @@ class MailingForm(forms.ModelForm):
             "interval",
         ]
         widgets = {
-            'clients': forms.CheckboxSelectMultiple(),
-            'message': forms.Select(attrs={'class': 'form-control'}),
-            'send_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-            'end_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-            'interval': forms.Select(attrs={'class': 'form-control'}),
+            "clients": forms.CheckboxSelectMultiple(),
+            "message": forms.Select(attrs={"class": "form-control"}),
+            "send_date": forms.DateTimeInput(
+                attrs={"class": "form-control", "type": "datetime-local"}
+            ),
+            "end_date": forms.DateTimeInput(
+                attrs={"class": "form-control", "type": "datetime-local"}
+            ),
+            "interval": forms.Select(attrs={"class": "form-control"}),
         }
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        initial_send_date = kwargs.pop('initial_send_date', now())
-        initial_end_date = kwargs.pop('initial_end_date', now())
+        self.user = kwargs.pop("user", None)
+        initial_send_date = kwargs.pop("initial_send_date", now())
+        initial_end_date = kwargs.pop("initial_end_date", now())
         super().__init__(*args, **kwargs)
 
-        self.fields['send_date'].initial = initial_send_date
-        self.fields['end_date'].initial = initial_end_date
+        self.fields["send_date"].initial = initial_send_date
+        self.fields["end_date"].initial = initial_end_date
 
     def save(self, commit=True):
         mailing = super().save(commit=False)

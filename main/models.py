@@ -58,8 +58,7 @@ class Mailing(models.Model):
         related_name="mailings",
         verbose_name="massage",
     )
-    send_date = models.DateTimeField(**NULLABLE, verbose_name="Дата начала рассылки"
-                                     )
+    send_date = models.DateTimeField(**NULLABLE, verbose_name="Дата начала рассылки")
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания рассылки"
     )

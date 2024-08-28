@@ -9,4 +9,3 @@ class MainConfig(AppConfig):
         # from main.scheduler import start
         # start()
         pass
-

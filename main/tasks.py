@@ -7,6 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def send_mailing(mailing_id=None):
     logger.info("Starting mailing process")
     zone = pytz.timezone(settings.TIME_ZONE)
@@ -15,14 +16,16 @@ def send_mailing(mailing_id=None):
     if mailing_id:
         mailings = Mailing.objects.filter(id=mailing_id)
     else:
-        mailings = Mailing.objects.filter(send_date__lte=current_datetime, end_date__gte=current_datetime).filter(
-            status__in=["created", "started"]
-        )
+        mailings = Mailing.objects.filter(
+            send_date__lte=current_datetime, end_date__gte=current_datetime
+        ).filter(status__in=["created", "started"])
 
     logger.info(f"Found {mailings.count()} mailings to process")
 
     for mailing in mailings:
-        last_try = TryMailing.objects.filter(mailing=mailing).order_by("-last_try").first()
+        last_try = (
+            TryMailing.objects.filter(mailing=mailing).order_by("-last_try").first()
+        )
         interval_mapping = {
             "once a minute": timedelta(minutes=1),
             "once a day": timedelta(days=1),
@@ -30,7 +33,11 @@ def send_mailing(mailing_id=None):
             "once a month": timedelta(days=30),
         }
 
-        if last_try is None or (current_datetime - last_try.last_try) >= interval_mapping[mailing.interval]:
+        if (
+            last_try is None
+            or (current_datetime - last_try.last_try)
+            >= interval_mapping[mailing.interval]
+        ):
             recipients = [client.email for client in mailing.clients.all()]
 
             try:

@@ -66,15 +66,18 @@ class MailingListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.has_perm('main.can_view_mailing'):
+        if user.has_perm("main.can_view_mailing"):
             return Mailing.objects.all()
         else:
             return Mailing.objects.filter(user=user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['can_view_mailing'] = self.request.user.has_perm('main.can_view_mailing')
+        context["can_view_mailing"] = self.request.user.has_perm(
+            "main.can_view_mailing"
+        )
         return context
+
 
 class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
@@ -83,15 +86,15 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        kwargs['initial_send_date'] = now()
-        kwargs['initial_end_date'] = now()
+        kwargs["user"] = self.request.user
+        kwargs["initial_send_date"] = now()
+        kwargs["initial_end_date"] = now()
         return kwargs
 
     def form_valid(self, form):
         response = super().form_valid(form)
         form.instance.user = self.request.user
-        form.instance.clients.set(self.request.POST.getlist('email'))
+        form.instance.clients.set(self.request.POST.getlist("email"))
         return response
 
 
