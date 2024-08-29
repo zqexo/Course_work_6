@@ -95,9 +95,7 @@ class Mailing(models.Model):
     auto_start = models.BooleanField(default=True, verbose_name="Автоматический старт")
 
     user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Пользователь"
+        User, on_delete=models.CASCADE, verbose_name="Пользователь"
     )
 
     class Meta:

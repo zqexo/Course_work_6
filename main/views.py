@@ -18,38 +18,38 @@ from random import sample
 @login_required
 def homepage(request):
     # Получение данных из кэша или базы данных
-    total_mailings = cache.get('total_mailings')
+    total_mailings = cache.get("total_mailings")
     if total_mailings is None:
         total_mailings = Mailing.objects.count()
-        cache.set('total_mailings', total_mailings)
+        cache.set("total_mailings", total_mailings)
 
-    active_mailings = cache.get('is_active_mailings')
+    active_mailings = cache.get("is_active_mailings")
     if active_mailings is None:
         active_mailings = Mailing.objects.filter(is_active=True).count()
-        cache.set('active_mailings', active_mailings)
+        cache.set("active_mailings", active_mailings)
 
-    unique_clients = cache.get('unique_clients')
+    unique_clients = cache.get("unique_clients")
     if unique_clients is None:
         unique_clients = Client.objects.count()
-        cache.set('unique_clients', unique_clients)
+        cache.set("unique_clients", unique_clients)
 
-    random_blogs = cache.get('random_blogs')
+    random_blogs = cache.get("random_blogs")
     if random_blogs is None:
         blogs = list(get_blogs_from_cache())  # Преобразуем QuerySet в список
         if len(blogs) > 3:
             random_blogs = sample(blogs, 3)  # Выбираем 3 случайных блога
         else:
             random_blogs = blogs  # Если меньше 3 блогов, выбираем все
-        cache.set('random_blogs', random_blogs)
+        cache.set("random_blogs", random_blogs)
 
     context = {
-        'total_mailings': total_mailings,
-        'active_mailings': active_mailings,
-        'unique_clients': unique_clients,
-        'random_blogs': random_blogs,
+        "total_mailings": total_mailings,
+        "active_mailings": active_mailings,
+        "unique_clients": unique_clients,
+        "random_blogs": random_blogs,
     }
 
-    return render(request, 'main/homepage.html', context)
+    return render(request, "main/homepage.html", context)
 
 
 class ClientListView(LoginRequiredMixin, ListView):
@@ -65,9 +65,7 @@ class ClientListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["can_view_clients"] = self.request.user.has_perm(
-            "main.can_view_client"
-        )
+        context["can_view_clients"] = self.request.user.has_perm("main.can_view_client")
         return context
 
 
@@ -96,9 +94,11 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         client = self.get_object()
 
-        if client.user == request.user or \
-                request.user.has_perm("main.can_change_clients") or \
-                request.user.is_superuser:
+        if (
+            client.user == request.user
+            or request.user.has_perm("main.can_change_clients")
+            or request.user.is_superuser
+        ):
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied("You do not have permission to edit this client.")
 
@@ -113,9 +113,11 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         client = self.get_object()
-        if client.user == request.user or \
-                request.user.has_perm("main.can_delete_clients") or \
-                request.user.is_superuser:
+        if (
+            client.user == request.user
+            or request.user.has_perm("main.can_delete_clients")
+            or request.user.is_superuser
+        ):
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied("You do not have permission to delete this client.")
 
@@ -181,10 +183,18 @@ class MailingListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["can_view_mailing"] = self.request.user.has_perm("main.can_view_mailing")
-        context["can_change_mailing"] = self.request.user.has_perm("main.can_change_mailing")
-        context["can_delete_mailing"] = self.request.user.has_perm("main.can_delete_mailing")
-        context["can_switch_mailing"] = self.request.user.has_perm("main.can_switch_mailing")
+        context["can_view_mailing"] = self.request.user.has_perm(
+            "main.can_view_mailing"
+        )
+        context["can_change_mailing"] = self.request.user.has_perm(
+            "main.can_change_mailing"
+        )
+        context["can_delete_mailing"] = self.request.user.has_perm(
+            "main.can_delete_mailing"
+        )
+        context["can_switch_mailing"] = self.request.user.has_perm(
+            "main.can_switch_mailing"
+        )
         return context
 
 
@@ -194,7 +204,10 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("main:mailing_list")
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.has_perm("main.can_switch_mailing") and not request.user.is_superuser:
+        if (
+            request.user.has_perm("main.can_switch_mailing")
+            and not request.user.is_superuser
+        ):
             raise PermissionDenied("You do not have permission to add a new mailing.")
         return super().dispatch(request, *args, **kwargs)
 
@@ -227,15 +240,20 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         mailing = self.get_object()
-        if mailing.user == request.user or \
-                request.user.has_perm("main.can_change_mailing") or \
-                request.user.has_perm("main.can_switch_mailing") or \
-                request.user.is_superuser:
+        if (
+            mailing.user == request.user
+            or request.user.has_perm("main.can_change_mailing")
+            or request.user.has_perm("main.can_switch_mailing")
+            or request.user.is_superuser
+        ):
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied("You do not have permission to edit this mailing.")
 
     def get_form_class(self):
-        if self.request.user.has_perm("main.can_switch_mailing") and not self.request.user.is_superuser:
+        if (
+            self.request.user.has_perm("main.can_switch_mailing")
+            and not self.request.user.is_superuser
+        ):
             return ManagerMailingForm
         return MailingForm
 
@@ -250,9 +268,11 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         mailing = self.get_object()
-        if mailing.user == request.user or \
-                request.user.has_perm("main.can_delete_mailing") or \
-                request.user.is_superuser:
+        if (
+            mailing.user == request.user
+            or request.user.has_perm("main.can_delete_mailing")
+            or request.user.is_superuser
+        ):
             return super().dispatch(request, *args, **kwargs)
         raise PermissionDenied("You do not have permission to delete this mailing.")
 

@@ -1,6 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DeleteView, UpdateView, CreateView, DetailView
+from django.views.generic import (
+    ListView,
+    DeleteView,
+    UpdateView,
+    CreateView,
+    DetailView,
+)
 from django.core.cache import cache
 
 from blog.forms import BlogForm
@@ -18,9 +24,15 @@ class BlogListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["can_create_blogpost"] = self.request.user.has_perm("blog.can_create_blogpost")
-        context["can_update_blogpost"] = self.request.user.has_perm("blog.can_update_blogpost")
-        context["can_delete_blogpost"] = self.request.user.has_perm("blog.can_delete_blogpost")
+        context["can_create_blogpost"] = self.request.user.has_perm(
+            "blog.can_create_blogpost"
+        )
+        context["can_update_blogpost"] = self.request.user.has_perm(
+            "blog.can_update_blogpost"
+        )
+        context["can_delete_blogpost"] = self.request.user.has_perm(
+            "blog.can_delete_blogpost"
+        )
         return context
 
 

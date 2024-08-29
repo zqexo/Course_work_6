@@ -47,7 +47,7 @@ class ClientForm(StyleFormMixin, ModelForm):
         fields = ["email", "first_name", "last_name", "comment"]
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
     def clean_first_name(self):
@@ -107,7 +107,7 @@ class MailingForm(forms.ModelForm):
             "send_date",
             "end_date",
             "interval",
-            "is_active"
+            "is_active",
         ]
         widgets = {
             "clients": forms.CheckboxSelectMultiple(),
@@ -128,7 +128,7 @@ class MailingForm(forms.ModelForm):
         initial_end_date = kwargs.pop("initial_end_date", now())
         super().__init__(*args, **kwargs)
         if self.user:
-            self.fields['clients'].queryset = Client.objects.filter(user=self.user)
+            self.fields["clients"].queryset = Client.objects.filter(user=self.user)
 
         self.fields["send_date"].initial = initial_send_date
         self.fields["end_date"].initial = initial_end_date

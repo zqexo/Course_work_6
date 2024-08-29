@@ -14,14 +14,13 @@ from main.views import (
     MailingUpdateView,
     MailingCreateView,
     MailingDeleteView,
-
     homepage,
 )
 
 app_name = MainConfig.name
 
 urlpatterns = [
-    path('', homepage, name='homepage'),
+    path("", homepage, name="homepage"),
     path("client/", ClientListView.as_view(), name="client_list"),
     path("client/new", ClientCreateView.as_view(), name="client_create"),
     path("client/edit/<int:pk>", ClientUpdateView.as_view(), name="client_update"),
