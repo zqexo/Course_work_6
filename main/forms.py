@@ -107,6 +107,7 @@ class MailingForm(forms.ModelForm):
             "send_date",
             "end_date",
             "interval",
+            "is_active"
         ]
         widgets = {
             "clients": forms.CheckboxSelectMultiple(),
@@ -118,6 +119,7 @@ class MailingForm(forms.ModelForm):
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
             "interval": forms.Select(attrs={"class": "form-control"}),
+            "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -139,3 +141,13 @@ class MailingForm(forms.ModelForm):
             mailing.save()
             self.save_m2m()
         return mailing
+
+
+class ManagerMailingForm(forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ["is_active"]
+
+        widgets = {
+            "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }

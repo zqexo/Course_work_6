@@ -22,6 +22,7 @@
                     {% if perms.users.can_view_users_list and perms.users.can_block_user%}
                         <li><a href="{% url 'users:user_list' %}" class="text-black-80">Пользователи</a></li>
                     {% endif %}
+                    <li><a href="{% url 'blog:blog_list' %}" class="text-black-80">Блог</a></li>
                     <br>
                 </ul>
             </div>

@@ -1,10 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/base.html" %}
+{% load my_tags %}
+{% load static %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="col-12">
 
-</body>
-</html>
+                <div class="row">
+                    <!-- Кнопка "Добавить" -->
+                    {% if can_create_blogpost %}
+                        <div class="col-1 d-flex justify-content-start">
+                            <a class="btn btn-outline-primary btn-circle-add d-flex justify-content-center align-items-center mx-auto"
+                               href="{% url 'blog:blog_create' %}"
+                               role="button">
+                                <img src="{% static 'crud_icons/add.png' %}" alt="Добавить новую версию"
+                                     class="btn-add-icon">
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="col-7 d-flex justify-content-start">
+                        <h6 class="text-danger">Только контент-менеджер может добавлять или изменять статьи!<br>
+                            <small class="text-primary">Либо пользователь должен быть superuser.</small>
+                        </h6>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Список блогов -->
+            <div class="row">
+
+                {% for blogpost in object_list %}
+                    <div class="col-6 mb-4">
+                        <div class="card h-100 d-flex flex-row" style="margin-bottom: 0;">
+                            <!-- Левый блок с изображением и кнопками -->
+                            <div class="d-flex flex-column align-items-center card-img-left" style="flex-shrink: 0;">
+                                {% if blogpost.image %}
+                                    <img class="ms-lg-2 mt-2" src="{{ blogpost.image | media_filter }}" alt=""
+                                         style="width: 200px; height: 200px; object-fit: cover;">
+                                {% else %}
+                                    <img class="ms-lg-2 mt-2" src="{% static 'media_default/blog_img.png' %}" alt=""
+                                         style="width: 200px; height: 200px; object-fit: cover;">
+                                {% endif %}
+
+                                <!-- Блок с кнопками под изображением -->
+                                <div class="btn-group text-center mt-3">
+                                    <a class="btn btn-outline-secondary btn-circle"
+                                       href="{% url 'blog:blog_detail' blogpost.pk %}"
+                                       role="button" title="Инфо">
+                                        <img src="{% static 'crud_icons/info.png' %}" alt="Инфо"
+                                             class="btn-icon">
+                                    </a>
+                                    {% if user.is_superuser or can_update_blogpost %}
+                                        <a class="btn btn-outline-secondary btn-circle"
+                                           href="{% url 'blog:blog_update' blogpost.pk %}"
+                                           role="button" title="Изменить">
+                                            <img src="{% static 'crud_icons/edit.png' %}" alt="Изменить"
+                                                 class="btn-icon">
+                                        </a>
+                                    {% endif %}
+                                    {% if user.is_superuser or can_delete_blogpost %}
+                                        <a class="btn btn-outline-secondary btn-circle btn-delete"
+                                           href="{% url 'blog:blog_delete' blogpost.pk %}"
+                                           role="button" title="Удалить">
+                                            <img src="{% static 'crud_icons/delete.png' %}" alt="Удалить"
+                                                 class="btn-icon">
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Правый блок с информацией о статье -->
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h5>{{ blogpost.title | truncatechars:30}}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        {{ blogpost.content | truncatechars:49 }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Автор: {{ blogpost.user }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Дата публикации: {{ blogpost.publish_date }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="text-primary fw-bold">
+                                            Количество просмотров: {{ blogpost.views }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

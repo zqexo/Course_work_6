@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "main",
     "users",
     "django_apscheduler",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru-ru"
 
 TIME_ZONE = "Europe/Moscow"
 
@@ -112,3 +113,12 @@ LOGOUT_REDIRECT_URL = "/"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = (BASE_DIR / "static",)
+
+CACHE_ENABLED = os.getenv("CACHE_ENABLED", False) == "True"
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv("LOCATION"),
+        }
+    }

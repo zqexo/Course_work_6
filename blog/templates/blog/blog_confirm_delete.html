@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/base.html" %}
 
-</body>
-</html>
+{% load static %}
+{% load form_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-sm bg-light">
+                    <div class="card-header bg-primary text-white text-center ">
+                        <h2>Удаление статьи</h2>
+                    </div>
+                    <div class="card-body py-3 rounded-pill">
+                        <h5 class="mb-3 text-center">Хотите удалить статью: {{ object.title }}?</h5>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between py-2">
+                        <form method="post" enctype="multipart/form-data" class="w-100 d-flex justify-content-between">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger flex-grow-1 me-2 rounded-pill">Удалить</button>
+                            <a class="btn btn-outline-primary flex-grow-1 ms-2 rounded-pill" href="{% url 'blog:blog_list' %}" role="button">Отменить</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

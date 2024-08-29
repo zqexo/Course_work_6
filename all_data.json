@@ -1,0 +1,356 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2024-08-29T11:48:16.694Z",
+      "user": 1,
+      "content_type": 3,
+      "object_id": "1",
+      "object_repr": "Manager",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2024-08-29T11:49:52.975Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "2",
+      "object_repr": "test@test.com",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Groups\", \"Active\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2024-08-29T11:50:55.843Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "3",
+      "object_repr": "test2@test2.com",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Active\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2024-08-29T20:43:13.140Z",
+      "user": 1,
+      "content_type": 3,
+      "object_id": "2",
+      "object_repr": "contet-manager",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2024-08-29T20:43:25.861Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "3",
+      "object_repr": "test2@test2.com",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Groups\"]}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2024-08-29T20:43:57.581Z",
+      "user": 1,
+      "content_type": 10,
+      "object_id": "4",
+      "object_repr": "test3@test3.com",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"Password\", \"Active\"]}}]"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Manager",
+      "permissions": [
+        36,
+        34,
+        52,
+        51
+      ]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "contet-manager",
+      "permissions": [
+        65,
+        67,
+        66
+      ]
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "6d1xnjl3fkdpz57ae6brzx8dhpp6x0wo",
+    "fields": {
+      "session_data": ".eJxVjEEOgjAQRe_StWnawZapS_ecoZmZDoIaSCisjHdXEha6_e-9_zKZtnXIW9Ulj8VcTGNOvxuTPHTaQbnTdJutzNO6jGx3xR602m4u-rwe7t_BQHX41gmpjSJIXmOKChJccCV5ByWAtt632oNw3yByRHV8FoaEwH2C6LCY9wfcYDex:1sjmRS:zSCGPJKa-kerUMMWhgzVGg3dnXw8GN-x0tcs8Q7xXgs",
+      "expire_date": "2024-09-12T21:12:30.845Z"
+    }
+  },
+  {
+    "model": "main.client",
+    "pk": 1,
+    "fields": {
+      "email": "test@test.com",
+      "first_name": "test",
+      "last_name": "testov",
+      "comment": "1",
+      "user": 2
+    }
+  },
+  {
+    "model": "main.client",
+    "pk": 2,
+    "fields": {
+      "email": "test2@test2.com",
+      "first_name": "test2",
+      "last_name": "testov2",
+      "comment": "2",
+      "user": 3
+    }
+  },
+  {
+    "model": "main.client",
+    "pk": 3,
+    "fields": {
+      "email": "test3@test3.com",
+      "first_name": "test3",
+      "last_name": "testov3",
+      "comment": "3",
+      "user": 1
+    }
+  },
+  {
+    "model": "main.message",
+    "pk": 1,
+    "fields": {
+      "subject": "Тестовая рассылка",
+      "body": "123",
+      "owner": 3
+    }
+  },
+  {
+    "model": "main.mailing",
+    "pk": 1,
+    "fields": {
+      "message": 1,
+      "send_date": null,
+      "created_at": "2024-08-29T12:16:59.270Z",
+      "updated_at": "2024-08-29T20:30:36.564Z",
+      "is_active": false,
+      "interval": "once a week",
+      "status": "created",
+      "end_date": null,
+      "auto_start": true,
+      "user": 3,
+      "clients": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "main.mailing",
+    "pk": 2,
+    "fields": {
+      "message": 1,
+      "send_date": "2024-08-29T12:35:40Z",
+      "created_at": "2024-08-29T12:35:59.169Z",
+      "updated_at": "2024-08-29T12:36:11.824Z",
+      "is_active": true,
+      "interval": "once a week",
+      "status": "created",
+      "end_date": "2024-08-29T12:35:40Z",
+      "auto_start": true,
+      "user": 1,
+      "clients": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$AHehfN1f6MlkxGivH3FRXr$jzmBJQF5VbIH0ydEJLF8fZv27hG1vYYw/x/dj2ND1aI=",
+      "last_login": "2024-08-29T20:40:37.975Z",
+      "is_superuser": true,
+      "first_name": "Администратор",
+      "last_name": "Администраторов",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-08-29T11:46:42.626Z",
+      "phone": null,
+      "avatar": "",
+      "email": "admin@admin.com",
+      "country": null,
+      "token": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$vAVqKDqWHo6H8yzTP6to4i$G1J+/mH4O31sy/1bX0MY8IXoKiZaduwWoYO06kDzKOY=",
+      "last_login": "2024-08-29T21:10:40.560Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-29T11:48:38Z",
+      "phone": null,
+      "avatar": "",
+      "email": "test@test.com",
+      "country": null,
+      "token": "d1162895eea99a41c29620b46c0703d6",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$QQIBM0ZAG71TWQy7r6uQiF$rCZ3XVmD/SnLCDmahxF3eUx/KVF9HHO4CGFzfDhXEco=",
+      "last_login": "2024-08-29T21:12:30.841Z",
+      "is_superuser": false,
+      "first_name": "content-manager",
+      "last_name": "content-manager",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-29T11:49:03Z",
+      "phone": "content-manager",
+      "avatar": "",
+      "email": "test2@test2.com",
+      "country": null,
+      "token": "abb16720028f10b4beaf00115374568e",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$hr5UqBlSINYfpxFoYUbb4Q$0/tn3LdkVaIKvBgThDzSj8hnmCMI6O6L9fehAVoNiJI=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-08-29T20:40:01Z",
+      "phone": null,
+      "avatar": "",
+      "email": "test3@test3.com",
+      "country": null,
+      "token": "2d8e95525a598c87d0c1b207d24da775",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 7,
+    "fields": {
+      "title": "Полезные советы по работе с Django",
+      "content": "Django — мощный фреймворк для веб-разработки на Python, и чтобы максимально эффективно его использовать, стоит следовать нескольким полезным советам. Во-первых, используйте встроенные возможности Django для быстрого создания админ-панелей, чтобы упростить управление контентом. Во-вторых, следуйте принципу DRY (Don’t Repeat Yourself) и старайтесь избегать дублирования кода. Это позволит поддерживать чистоту кода и облегчить его сопровождение. В-третьих, активно используйте функции кэширования Django для улучшения производительности вашего приложения. Также не забывайте про тестирование: регулярные тесты помогут выявить и устранить ошибки на ранних стадиях разработки. И наконец, документируйте ваш код и следуйте лучшим практикам Django, чтобы проект оставался понятным и поддерживаемым.",
+      "image": "",
+      "views": 6,
+      "publish_date": "2024-08-29T19:27:29.414Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 8,
+    "fields": {
+      "title": "Как выбрать приложение для рассылок?",
+      "content": "Выбор подходящего приложения для рассылок может стать решающим фактором для успеха вашей email-маркетинговой стратегии. При выборе стоит учитывать несколько ключевых факторов. Во-первых, обратите внимание на функционал: поддержка автоматизации, аналитики и сегментации базы данных. Во-вторых, важна простота использования: удобный интерфейс и доступные шаблоны помогут ускорить процесс создания рассылок. В-третьих, проверьте интеграции с другими инструментами, такими как CRM-системы и социальные сети. Также стоит учитывать стоимость, так как многие приложения предлагают различные тарифные планы в зависимости от количества контактов и частоты рассылок. Не забудьте протестировать приложение, чтобы убедиться, что оно соответствует вашим требованиям.",
+      "image": "",
+      "views": 3,
+      "publish_date": "2024-08-29T19:27:59.863Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 10,
+    "fields": {
+      "title": "Преимущества приложений для рассылок",
+      "content": "Приложения для рассылок играют ключевую роль в современном маркетинге, предоставляя бизнесам инструменты для эффективного взаимодействия с клиентами. Они позволяют создавать персонализированные и целенаправленные кампании, что значительно повышает вероятность конверсии. Одним из главных преимуществ таких приложений является возможность автоматизации процессов: от сбора контактов до анализа результатов рассылок. Более того, они предлагают мощные аналитические функции, которые помогают отслеживать открываемость писем, клики и конверсии, что в свою очередь позволяет оптимизировать стратегии. Интеграция с CRM-системами и другими инструментами маркетинга делает эти приложения незаменимыми для построения долгосрочных отношений с клиентами и повышения их лояльности.",
+      "image": "",
+      "views": 4,
+      "publish_date": "2024-08-29T20:21:52.999Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 11,
+    "fields": {
+      "title": "Топ-5 фреймворков для работы с Django",
+      "content": "Работа с Django может быть значительно упрощена при использовании различных фреймворков и библиотек. Один из популярных инструментов — Django REST Framework, который позволяет легко создавать RESTful API для вашего проекта. Django Channels добавляет поддержку WebSocket, что делает ваше приложение более интерактивным и современным. Для работы с формами и валидацией часто используется Django Crispy Forms, который упрощает стилизацию форм. Django Allauth предлагает расширенные возможности для аутентификации и регистрации пользователей. Наконец, Django Haystack помогает интегрировать полнотекстовый поиск, что может быть полезно для улучшения функциональности вашего веб-приложения.",
+      "image": "",
+      "views": 2,
+      "publish_date": "2024-08-29T20:26:17.923Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 12,
+    "fields": {
+      "title": "Роль искусственного интеллекта в бизнесе",
+      "content": "Искусственный интеллект (ИИ) оказывает значительное влияние на бизнес-процессы в различных отраслях. С его помощью компании могут автоматизировать рутинные задачи, что повышает их эффективность и снижает затраты. ИИ также позволяет анализировать большие объемы данных, выявляя тенденции и закономерности, которые могут быть использованы для принятия более обоснованных решений. В сфере клиентского сервиса ИИ используется для создания чат-ботов, которые могут круглосуточно помогать клиентам. В области маркетинга ИИ помогает в создании персонализированного контента и таргетированной рекламы. Таким образом, внедрение ИИ в бизнес-процессы помогает компаниям повышать продуктивность, улучшать качество обслуживания и адаптироваться к быстро меняющимся условиям рынка!",
+      "image": "",
+      "views": 2,
+      "publish_date": "2024-08-29T20:26:31.037Z",
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 14,
+    "fields": {
+      "title": "Как искусственный интеллект меняет образование",
+      "content": "Искусственный интеллект (ИИ) значительно изменяет образовательный процесс, предлагая новые возможности для обучения и преподавания. Одна из главных революций — персонализированное обучение. ИИ может адаптировать учебные материалы и задания в зависимости от потребностей и уровня знаний каждого ученика, что делает обучение более эффективным. Виртуальные репетиторы и образовательные платформы, основанные на ИИ, предоставляют учащимся доступ к круглосуточной помощи и дополнительным материалам. Также ИИ помогает преподавателям в оценке успеваемости и анализе учебных данных, позволяя им сосредоточиться на индивидуальной поддержке студентов. В будущем ИИ может открыть новые горизонты для обучения, интегрируя инновационные технологии и методы, что сделает образовательный процесс более динамичным и доступным.",
+      "image": "",
+      "views": 1,
+      "publish_date": "2024-08-29T21:20:11.480Z",
+      "user": 3
+    }
+  }
+]

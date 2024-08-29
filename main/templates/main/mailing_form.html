@@ -15,32 +15,7 @@
                     <div class="card-body">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-
-                            <div class="form-group">
-                                <label for="{{ form.email.id_for_label }}">Выберите клиентов:</label>
-                                {{ form.clients }}
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.message.id_for_label }}">Сообщение:</label>
-                                {{ form.message }}
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.send_date.id_for_label }}">Дата и время начала:</label>
-                                {{ form.send_date }}
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.end_date.id_for_label }}">Дата и время окончания:</label>
-                                {{ form.end_date }}
-                            </div>
-
-                            <div class="form-group">
-                                <label for="{{ form.interval.id_for_label }}">Интервал:</label>
-                                {{ form.interval }}
-                            </div>
-
+                            {{ form.as_p }}
                             <button class="btn btn-success rounded-pill" type="submit">Сохранить</button>
                             <a class="btn btn-secondary rounded-pill" href="{% url 'main:mailing_list' %}" role="button">Отменить</a>
                         </form>

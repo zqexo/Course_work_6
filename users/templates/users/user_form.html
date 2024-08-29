@@ -17,7 +17,7 @@
                             {% csrf_token %}
                             {{ form.as_p }}
                             <button class="btn btn-success rounded-pill" type="submit">Сохранить</button>
-                        <a class="btn btn-secondary rounded-pill" href="{% url 'main:client_list' %}"
+                        <a class="btn btn-secondary rounded-pill" href="{% url 'users:user_list' %}"
                            role="button">Отменить</a>
                     </form>
                 </div>

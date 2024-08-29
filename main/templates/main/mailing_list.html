@@ -7,6 +7,8 @@
 
                 <div class="row">
                     <!-- Кнопка "Добавить" -->
+                    {% if can_switch_mailing and not request.user.is_superuser %}
+                    {% else %}
                     <div class="col-1 d-flex justify-content-start">
                         <a class="btn btn-outline-primary btn-circle-add d-flex justify-content-center align-items-center mx-auto"
                            href="{% url 'main:mailing_create' %}"
@@ -15,9 +17,10 @@
                                  class="btn-add-icon">
                         </a>
                     </div>
+                    {% endif %}
                     <div class="col-7 d-flex justify-content-start">
                         <h6 class="text-danger">Пользователь видит только те рассылки, автором которых является!<br>
-                            <small class="text-primary">Либо пользователь должен быть контент-менеджером или
+                            <small class="text-primary">Либо пользователь должен быть менеджером или
                                 superuser.</small>
                         </h6>
                     </div>
@@ -52,11 +55,18 @@
                                     Статус: {{ mailing.status }}
                                 </li>
                                 <li class="list-group-item">
+                                    {% if mailing.is_active %}
+                                        Рассылка включена
+                                    {% else %}
+                                        Рассылка выключена
+                                    {% endif %}
+                                </li>
+                                <li class="list-group-item">
                                     Автор: {{ mailing.user }}
                                 </li>
                                 <li class="list-group-item">
                                     <div class="btn-group text-center">
-                                        {% if user.is_superuser or can_change_mailing or mailing.user == request.user %}
+                                        {% if user.is_superuser or can_change_mailing or mailing.user == request.user or can_switch_mailing %}
                                             <a class="btn btn-outline-secondary btn-circle"
                                                href="{% url 'main:mailing_update' mailing.pk %}"
                                                role="button" title="Изменить">

@@ -228,6 +228,32 @@
 
 
         }
+
+        .card {
+            margin-bottom: 3px;
+            padding-bottom: 3px;
+        }
+
+        .card-body {
+            padding-bottom: 3px;
+        }
+
+        .card-header,
+        .card-footer {
+            margin-bottom: 3px;
+        }
+
+        .list-group-item {
+            padding: 0.75rem 1.25rem; /* Минимизация padding у элементов списка */
+        }
+
+        .btn-main-page {
+            font-size: 1.5rem; /* Размер шрифта */
+            padding: 0.75rem 1.25rem; /* Внутренние отступы */
+            border-radius: 0.3rem; /* Радиус скругления углов */
+            /* Вы можете добавить другие стили по вашему выбору */
+        }
+
     </style>
 
 
@@ -314,15 +340,16 @@
                 <h1 class="fw-light">Какое-то название</h1>
                 <p class="lead text-body-secondary">Какое-то описание.</p>
                 <p>
-
-                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2 ms-lg-2">Клиенты</a>
-                    {% if perms.users.can_view_users_list and perms.users.can_block_user %}
-                        <a href="{% url 'users:user_list' %}" class="btn btn-outline-primary my-2 ">Пользователи</a>
-                    {% endif %}
-
+                    <a href="{% url 'main:homepage' %}" class="btn btn-primary my-2 fw-bold btn-main-page rounded-pill">Главная страница</a>
                     <br>
-                    <a href="{% url 'main:mailing_list' %}" class="btn btn-primary my-2"> Рассылки </a>
-                    <a href="{% url 'main:message_list' %}" class="btn btn-outline-primary my-2">Сообщения</a>
+                    <a href="{% url 'main:client_list' %}" class="btn btn-primary my-2 ms-lg-2 rounded-pill">Клиенты</a>
+                    {% if perms.users.can_view_users_list and perms.users.can_block_user %}
+                        <a href="{% url 'users:user_list' %}" class="btn btn-outline-primary my-2 rounded-pill">Пользователи</a>
+                    {% endif %}
+                    <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary my-2 rounded-pill">Блог</a>
+                    <br>
+                    <a href="{% url 'main:mailing_list' %}" class="btn btn-primary my-2 rounded-pill"> Рассылки </a>
+                    <a href="{% url 'main:message_list' %}" class="btn btn-outline-primary my-2 rounded-pill">Сообщения</a>
                 </p>
             </div>
         </div>

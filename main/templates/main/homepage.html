@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% load my_tags %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Главная страница</h1>
+    
+    <!-- Секция с информацией о рассылках -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title">Всего рассылок</h4>
+                    <p class="card-text">{{ total_mailings }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title">Активные рассылки</h4>
+                    <p class="card-text">{{ active_mailings }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title">Уникальные клиенты</h4>
+                    <p class="card-text">{{ unique_clients }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция с тремя случайными статьями -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mb-4">Случайные статьи из блога</h3>
+        </div>
+        {% for blogpost in random_blogs %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-img-top">
+                        {% if blogpost.image %}
+                            <img class="card-img-top" src="{{ blogpost.image | media_filter }}" alt="Изображение статьи"
+                                 style="width: 100px; height: 100px; object-fit: cover;">
+                        {% else %}
+                            <img class="card-img-top" src="{% static 'media_default/blog_img.png' %}" alt="Изображение по умолчанию"
+                                 style="width: 100px; height: 100px; object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ blogpost.title | truncatechars:45 }}</h5>
+                        <p class="card-text">{{ blogpost.content | truncatechars:100 }}</p>
+                        <a href="{% url 'blog:blog_detail' blogpost.pk %}" class="btn btn-primary">Читать далее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -14,10 +14,12 @@ def send_mailing(mailing_id=None):
     current_datetime = datetime.now(zone)
 
     if mailing_id:
-        mailings = Mailing.objects.filter(id=mailing_id)
+        mailings = Mailing.objects.filter(id=mailing_id, is_active=True)
     else:
         mailings = Mailing.objects.filter(
-            send_date__lte=current_datetime, end_date__gte=current_datetime
+            send_date__lte=current_datetime,
+            end_date__gte=current_datetime,
+            is_active=True
         ).filter(status__in=["created", "started"])
 
     logger.info(f"Found {mailings.count()} mailings to process")
@@ -62,3 +64,4 @@ def send_mailing(mailing_id=None):
                 mailing.save()
 
     logger.info("Mailing process completed")
+

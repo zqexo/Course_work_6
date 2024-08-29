@@ -72,6 +72,7 @@ class Mailing(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения рассылки"
     )
+    is_active = models.BooleanField(default=True)
 
     COMPLETED = "completed"
     CREATED = "created"
@@ -108,10 +109,11 @@ class Mailing(models.Model):
             ("can_delete_mailing", "can delete mailing"),
             ("can_view_mailing", "can view mailing"),
             ("can_create_mailing", "can create mailing"),
+            ("can_switch_mailing", "can switch mailing"),
         ]
 
-    def __str__(self):
-        return f"Рассылка с клиентом {self.clients} сообщением {self.message}"
+        def __str__(self):
+            return f"Рассылка {self.pk}"
 
 
 class TryMailing(models.Model):
